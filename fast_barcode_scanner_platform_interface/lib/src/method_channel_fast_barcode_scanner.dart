@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'fast_barcode_scanner_platform_interface.dart';
 import 'types/barcode.dart';
 import 'types/barcode_type.dart';
 import 'types/preview_configuration.dart';
-import 'fast_barcode_scanner_platform_interface.dart';
 
 class MethodChannelFastBarcodeScanner extends FastBarcodeScannerPlatform {
   static const MethodChannel _channel =
@@ -36,11 +35,11 @@ class MethodChannelFastBarcodeScanner extends FastBarcodeScannerPlatform {
     });
 
     final response = await _channel.invokeMethod('start', {
-      'types': types.map((e) => describeEnum(e)).toList(growable: false),
-      'mode': describeEnum(detectionMode),
-      'res': describeEnum(resolution),
-      'fps': describeEnum(framerate),
-      'pos': describeEnum(position)
+      'types': types.map((e) => e.name).toList(growable: false),
+      'mode': detectionMode.name,
+      'res': resolution.name,
+      'fps': framerate.name,
+      'pos': position.name
     });
 
     return PreviewConfiguration(response);
@@ -65,7 +64,7 @@ class MethodChannelFastBarcodeScanner extends FastBarcodeScannerPlatform {
 
   @override
   Future<bool> changeCamera(CameraPosition position) => _channel
-      .invokeMethod('changeCamera', describeEnum(position))
+      .invokeMethod('changeCamera', position.name)
       .then<bool>((success) => success);
 
   @override

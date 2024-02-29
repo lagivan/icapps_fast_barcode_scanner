@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../../fast_barcode_scanner_platform_interface.dart';
 
 /// Describes a Barcode with type and value.
@@ -7,7 +5,7 @@ import '../../fast_barcode_scanner_platform_interface.dart';
 class Barcode {
   /// Creates a [Barcode] from a Flutter Message Protocol
   Barcode(List<dynamic> data)
-      : type = BarcodeType.values.firstWhere((e) => describeEnum(e) == data[0]),
+      : type = BarcodeType.values.firstWhere((e) => e.name == data[0]),
         value = data[1];
 
   /// The type of the barcode.
